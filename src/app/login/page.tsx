@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -10,25 +11,18 @@ import {
   Loader2,
   Lock,
   Mail,
-  ShieldCheck,
   ArrowRight,
+  ArrowLeft,
 } from "lucide-react";
-import { Logo } from "@/components/brand/logo";
-import { LoginAside } from "@/components/auth/login-aside";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useLogin } from "@/hooks/use-auth";
 import { useAuthStore } from "@/store/auth";
 import { apiError } from "@/lib/api";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const DEMO_ACCOUNTS = [
-  { role: "Super Admin", email: "admin@iaetds.io" },
-  { role: "Security Analyst", email: "analyst@iaetds.io" },
-  { role: "Maintenance Eng.", email: "engineer@iaetds.io" },
-  { role: "Operations Mgr.", email: "manager@iaetds.io" },
+  { role: "Admin", email: "admin@iaetds.io" },
+  { role: "Analyst", email: "analyst@iaetds.io" },
+  { role: "Engineer", email: "engineer@iaetds.io" },
+  { role: "Manager", email: "manager@iaetds.io" },
   { role: "Viewer", email: "viewer@iaetds.io" },
 ];
 
@@ -38,8 +32,8 @@ export default function LoginPage() {
   const user = useAuthStore((s) => s.user);
   const hydrated = useAuthStore((s) => s.hydrated);
 
-  const [email, setEmail] = React.useState("admin@iaetds.io");
-  const [password, setPassword] = React.useState("Password123!");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [remember, setRemember] = React.useState(true);
   const [showPw, setShowPw] = React.useState(false);
 
@@ -51,168 +45,183 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await login.mutateAsync({ email, password, remember });
-      toast.success("Welcome back", { description: "Authentication successful." });
+      toast.success("Welcome back", { description: "Opening operations console…" });
     } catch (err) {
       toast.error("Sign-in failed", { description: apiError(err) });
     }
   };
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      <LoginAside />
+    <div className="mkt-root relative min-h-screen">
+      <div className="mkt-hero-atmosphere absolute inset-0" aria-hidden />
+      <div className="mkt-hero-grid absolute inset-0 opacity-30" aria-hidden />
 
-      <div className="relative flex flex-col items-center justify-center px-6 py-10">
-        <div className="absolute right-5 top-5">
-          <ThemeToggle />
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-5 py-12 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-16 lg:py-16">
+        <div className="mb-10 hidden flex-col justify-center lg:mb-0 lg:flex">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm text-[var(--mkt-muted)] hover:text-[var(--mkt-ink)]">
+            <ArrowLeft className="size-4" /> Back to IAETDS
+          </Link>
+          <p className="mt-10 font-display text-5xl tracking-tight text-[var(--mkt-ink)]">IAETDS</p>
+          <h1 className="mt-4 max-w-md font-display text-2xl leading-snug text-[var(--mkt-ink)]">
+            Sign in to your operations console.
+          </h1>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--mkt-muted)]">
+            Security Defense, monitoring, and incident workflows — provisioned on the domains and hosts you connected.
+          </p>
+          <ul className="mt-8 space-y-2 font-mono text-[11px] text-[var(--mkt-teal)]">
+            <li>▸ session · JWT + refresh</li>
+            <li>▸ rbac · role-scoped permissions</li>
+            <li>▸ console · /console</li>
+          </ul>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-sm"
+          transition={{ duration: 0.45 }}
+          className="mx-auto w-full max-w-md"
         >
-          <div className="mb-8 lg:hidden">
-            <Logo size="lg" />
-          </div>
+          <Link
+            href="/"
+            className="mb-8 inline-flex items-center gap-2 text-sm text-[var(--mkt-muted)] hover:text-[var(--mkt-ink)] lg:hidden"
+          >
+            <ArrowLeft className="size-4" /> IAETDS
+          </Link>
 
-          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-            <ShieldCheck className="size-3.5 text-success" />
-            Secure enterprise access
-          </div>
+          <div className="rounded-2xl border border-[var(--mkt-line)] bg-[var(--mkt-surface)] p-6 shadow-[0_24px_60px_-36px_rgba(15,23,42,0.35)] sm:p-8">
+            <h2 className="font-display text-2xl text-[var(--mkt-ink)]">Sign in</h2>
+            <p className="mt-1.5 text-sm text-[var(--mkt-muted)]">
+              Use your work credentials. New customer?{" "}
+              <Link href="/get-started" className="font-semibold text-[var(--mkt-teal)] hover:underline">
+                Start provisioning
+              </Link>
+            </p>
 
-          <h2 className="text-2xl font-bold tracking-tight">Sign in to IAETDS</h2>
-          <p className="mt-1.5 text-sm text-muted-foreground">
-            Enter your credentials to access the command center.
-          </p>
+            <form onSubmit={submit} className="mt-7 space-y-4">
+              <label className="block">
+                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--mkt-muted)]">
+                  Work email
+                </span>
+                <div className="relative mt-1.5">
+                  <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--mkt-muted)]" />
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@company.com"
+                    className="w-full rounded-md border border-[var(--mkt-line-strong)] bg-[var(--mkt-bg)] py-2.5 pl-10 pr-3 text-sm outline-none focus:border-[var(--mkt-teal)] focus:ring-2 focus:ring-[color-mix(in_oklab,var(--mkt-teal)_35%,transparent)]"
+                  />
+                </div>
+              </label>
 
-          <form onSubmit={submit} className="mt-7 space-y-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="email">Work email</Label>
-              <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  className="pl-10"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@company.com"
-                  required
+              <label className="block">
+                <span className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-[var(--mkt-muted)]">
+                  Password
+                  <button
+                    type="button"
+                    onClick={() =>
+                      toast.info("Password reset", {
+                        description: "A reset link would be emailed to your work address.",
+                      })
+                    }
+                    className="normal-case tracking-normal text-[var(--mkt-teal)] hover:underline"
+                  >
+                    Forgot?
+                  </button>
+                </span>
+                <div className="relative mt-1.5">
+                  <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--mkt-muted)]" />
+                  <input
+                    type={showPw ? "text" : "password"}
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full rounded-md border border-[var(--mkt-line-strong)] bg-[var(--mkt-bg)] py-2.5 pl-10 pr-10 text-sm outline-none focus:border-[var(--mkt-teal)] focus:ring-2 focus:ring-[color-mix(in_oklab,var(--mkt-teal)_35%,transparent)]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPw((v) => !v)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--mkt-muted)]"
+                  >
+                    {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  </button>
+                </div>
+              </label>
+
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-[var(--mkt-muted)]">
+                <input
+                  type="checkbox"
+                  checked={remember}
+                  onChange={(e) => setRemember(e.target.checked)}
+                  className="size-4 rounded border-[var(--mkt-line-strong)] accent-[var(--mkt-teal)]"
                 />
-              </div>
+                Keep me signed in
+              </label>
+
+              <button
+                type="submit"
+                disabled={login.isPending}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--mkt-ink)] px-4 py-3 text-sm font-semibold text-[var(--mkt-bg)] disabled:opacity-70"
+              >
+                {login.isPending ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <>
+                    Sign in <ArrowRight className="size-4" />
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="my-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--mkt-muted)]">
+              <div className="h-px flex-1 bg-[var(--mkt-line)]" />
+              Or
+              <div className="h-px flex-1 bg-[var(--mkt-line)]" />
             </div>
 
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+            <div className="grid grid-cols-2 gap-2">
+              {["SSO / SAML", "Microsoft Entra"].map((p) => (
                 <button
+                  key={p}
                   type="button"
                   onClick={() =>
-                    toast.info("Password reset", {
-                      description: "A reset link would be emailed to you.",
-                    })
+                    toast.info(p, { description: "Enterprise IdP handshake would open here." })
                   }
-                  className="text-xs font-medium text-primary hover:underline"
+                  className="rounded-md border border-[var(--mkt-line-strong)] bg-[var(--mkt-bg)] px-3 py-2.5 text-xs font-semibold text-[var(--mkt-ink)] hover:border-[var(--mkt-ink)]"
                 >
-                  Forgot password?
-                </button>
-              </div>
-              <div className="relative">
-                <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  id="password"
-                  type={showPw ? "text" : "password"}
-                  autoComplete="current-password"
-                  className="px-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPw((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                  {showPw ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
-                <Switch checked={remember} onCheckedChange={setRemember} />
-                Remember me for 7 days
-              </label>
-            </div>
-
-            <Button
-              type="submit"
-              variant="gradient"
-              size="lg"
-              className="w-full"
-              disabled={login.isPending}
-            >
-              {login.isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <>
-                  Sign in securely <ArrowRight className="size-4" />
-                </>
-              )}
-            </Button>
-          </form>
-
-          <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
-            <div className="h-px flex-1 bg-border" />
-            OR CONTINUE WITH
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {["SSO / SAML", "Microsoft Entra"].map((p) => (
-              <Button
-                key={p}
-                type="button"
-                variant="outline"
-                onClick={() =>
-                  toast.info(`${p}`, {
-                    description: "Enterprise SSO would launch here.",
-                  })
-                }
-              >
-                {p}
-              </Button>
-            ))}
-          </div>
-
-          <div className="mt-7 rounded-xl border border-dashed border-border bg-muted/30 p-3">
-            <p className="mb-2 text-xs font-semibold text-muted-foreground">
-              Demo accounts — password{" "}
-              <span className="font-mono text-foreground">Password123!</span>
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {DEMO_ACCOUNTS.map((a) => (
-                <button
-                  key={a.email}
-                  type="button"
-                  onClick={() => {
-                    setEmail(a.email);
-                    setPassword("Password123!");
-                  }}
-                  className="rounded-md border border-border bg-card px-2 py-1 text-[11px] font-medium transition-colors hover:border-primary hover:text-primary"
-                >
-                  {a.role}
+                  {p}
                 </button>
               ))}
             </div>
-          </div>
 
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            Protected by enterprise-grade encryption & MFA-ready authentication.
-          </p>
+            <details className="mt-6 rounded-lg border border-dashed border-[var(--mkt-line)] p-3">
+              <summary className="cursor-pointer text-xs font-medium text-[var(--mkt-muted)]">
+                Evaluation accounts
+              </summary>
+              <p className="mt-2 text-[11px] text-[var(--mkt-muted)]">
+                Password: <span className="font-mono text-[var(--mkt-ink)]">Password123!</span>
+              </p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {DEMO_ACCOUNTS.map((a) => (
+                  <button
+                    key={a.email}
+                    type="button"
+                    onClick={() => {
+                      setEmail(a.email);
+                      setPassword("Password123!");
+                    }}
+                    className="rounded border border-[var(--mkt-line)] px-2 py-1 text-[11px] font-medium hover:border-[var(--mkt-teal)]"
+                  >
+                    {a.role}
+                  </button>
+                ))}
+              </div>
+            </details>
+          </div>
         </motion.div>
       </div>
     </div>

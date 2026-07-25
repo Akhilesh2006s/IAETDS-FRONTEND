@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Syne, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const inter = Inter({
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -16,11 +22,14 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IAETDS — Enterprise Technology Defense & Sustainability",
+  title: {
+    default: "IAETDS — Enterprise Technology Defense & Sustainability",
+    template: "%s · IAETDS",
+  },
   description:
-    "Intelligent Architecture for Enterprise Technology Defense & Sustainability. Unified command center for infrastructure, security, performance, and operations.",
+    "Intelligent Architecture for Enterprise Technology Defense & Sustainability. Security from ₹8,500/mo — provisioned on your domain, APIs, and hosts.",
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230F172A'/><path d='M16 6l8 3.5v5.5c0 4.5-3 7.5-8 9-5-1.5-8-4.5-8-9V9.5L16 6z' fill='none' stroke='%232DD4BF' stroke-width='1.6'/><path d='M12.5 15.5l2.2 2.2 4.5-4.5' fill='none' stroke='%232DD4BF' stroke-width='1.6'/></svg>",
   },
 };
 
@@ -31,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jetbrains.variable} font-sans`}>
+      <body className={`${syne.variable} ${manrope.variable} ${jetbrains.variable} font-sans`}>
         <Providers>{children}</Providers>
       </body>
     </html>

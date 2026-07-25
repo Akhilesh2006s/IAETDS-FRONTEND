@@ -176,3 +176,81 @@
     @apply px-3 pb-1 pt-3 text-[10px] font-semibold uppercase tracking-wider text-eoc-muted;
   }
 }
+
+/* ── Marketing product surface (light, ink + teal) ── */
+.mkt-root {
+  --mkt-bg: #f3f5f4;
+  --mkt-surface: #fafbfa;
+  --mkt-ink: #0f172a;
+  --mkt-muted: #5b6575;
+  --mkt-line: #d8dedc;
+  --mkt-line-strong: #b8c2be;
+  --mkt-teal: #0d9488;
+  --mkt-accent: #0d9488;
+  background: var(--mkt-bg);
+  color: var(--mkt-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.mkt-root .font-display,
+.font-display {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+}
+
+.mkt-hero-atmosphere {
+  background:
+    radial-gradient(90% 70% at 12% 18%, rgba(13, 148, 136, 0.14), transparent 55%),
+    radial-gradient(70% 55% at 88% 12%, rgba(15, 23, 42, 0.08), transparent 50%),
+    linear-gradient(165deg, #eef2f0 0%, #f3f5f4 42%, #e7ece9 100%);
+}
+
+.mkt-hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
+}
+
+.mkt-hero-panel {
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(15, 23, 42, 0.04) 40%, rgba(13, 148, 136, 0.12) 100%),
+    repeating-linear-gradient(
+      -18deg,
+      transparent,
+      transparent 18px,
+      rgba(15, 23, 42, 0.03) 18px,
+      rgba(15, 23, 42, 0.03) 19px
+    );
+  border-left: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.mkt-hero-scanline p {
+  animation: mkt-fade-up 0.7s ease both;
+}
+.mkt-hero-scanline p:nth-child(2) { animation-delay: 0.12s; }
+.mkt-hero-scanline p:nth-child(3) { animation-delay: 0.24s; }
+.mkt-hero-scanline p:nth-child(4) { animation-delay: 0.36s; }
+.mkt-hero-scanline p:nth-child(5) { animation-delay: 0.48s; }
+
+@keyframes mkt-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mkt-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid color-mix(in oklab, var(--mkt-teal, #0d9488) 25%, transparent);
+  border-top-color: var(--mkt-teal, #0d9488);
+  border-radius: 9999px;
+  animation: mkt-spin 0.7s linear infinite;
+}
+
+@keyframes mkt-spin {
+  to { transform: rotate(360deg); }
+}
+
+.font-mkt {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
