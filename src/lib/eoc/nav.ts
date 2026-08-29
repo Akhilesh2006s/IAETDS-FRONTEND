@@ -18,6 +18,7 @@ import {
   BookOpen,
   Bell,
   Settings,
+  Siren,
   type LucideIcon,
 } from "lucide-react";
 
@@ -55,6 +56,7 @@ export const navGroups: NavGroup[] = [
   {
     label: "Operations",
     items: [
+      { label: "Incident Workbench", href: `${BASE}/incidents`, icon: Siren, badge: "1" },
       { label: "Maintenance Center", href: `${BASE}/maintenance`, icon: Wrench },
       { label: "Security Center", href: `${BASE}/security`, icon: ShieldCheck },
       { label: "Performance Center", href: `${BASE}/performance`, icon: Gauge },

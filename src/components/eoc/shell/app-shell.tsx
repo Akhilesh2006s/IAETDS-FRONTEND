@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import { Sidebar } from "./sidebar";
@@ -9,10 +9,14 @@ import { Topbar } from "./topbar";
 import { CommandPalette } from "./command-palette";
 import { AIAssistant } from "./ai-assistant";
 import { useEocStore } from "@/lib/eoc/store";
+import { useAuthStore } from "@/store/auth";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { setTheme } = useTheme();
   const pathname = usePathname();
+  const router = useRouter();
+  const user = useAuthStore((s) => s.user);
+  const hydrated = useAuthStore((s) => s.hydrated);
   const [paletteOpen, setPaletteOpen] = React.useState(false);
   const [mobileNav, setMobileNav] = React.useState(false);
 
@@ -41,6 +45,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     setMobileNav(false);
   }, [pathname]);
+
+  React.useEffect(() => {
+    if (hydrated && !user) router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+  }, [hydrated, user, router, pathname]);
+
+  if (!hydrated || !user) {
+    return <div className="dark flex min-h-screen items-center justify-center bg-eoc-bg text-sm text-eoc-muted">Securing workspace…</div>;
+  }
 
   return (
     <div className="dark min-h-screen bg-eoc-bg text-eoc-fg antialiased">

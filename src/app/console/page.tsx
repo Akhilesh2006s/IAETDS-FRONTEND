@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CheckCircle2, Clock, Loader2, RotateCcw, XCircle } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock, Loader2, RotateCcw, Siren, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader, EButton } from "@/components/eoc/page-header";
 import {
@@ -99,6 +99,22 @@ export default function DashboardPage() {
           </>
         }
       />
+
+      <Surface className="flex flex-col gap-4 border-eoc-danger/30 bg-eoc-danger/[0.04] p-5 sm:flex-row sm:items-center">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-eoc-danger/15">
+          <Siren className="h-5 w-5 text-eoc-danger" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-sm font-semibold text-eoc-fg">INC-1042 · Checkout degradation</p>
+            <StatusPill tone="danger">SEV-1</StatusPill>
+          </div>
+          <p className="mt-1 text-xs text-eoc-muted">DigitalOcean, MongoDB Atlas, and GitHub signals correlated into one actionable incident.</p>
+        </div>
+        <EButton variant="primary" asChild>
+          <Link href="/console/incidents">Open workbench <ArrowRight className="h-4 w-4" /></Link>
+        </EButton>
+      </Surface>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {scores.map((s) => (

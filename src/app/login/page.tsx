@@ -18,13 +18,13 @@ import { useLogin } from "@/hooks/use-auth";
 import { useAuthStore } from "@/store/auth";
 import { apiError } from "@/lib/api";
 
-const DEMO_ACCOUNTS = [
+const DEMO_ACCOUNTS = process.env.NODE_ENV === "development" ? [
   { role: "Admin", email: "admin@iaetds.io" },
   { role: "Analyst", email: "analyst@iaetds.io" },
   { role: "Engineer", email: "engineer@iaetds.io" },
   { role: "Manager", email: "manager@iaetds.io" },
   { role: "Viewer", email: "viewer@iaetds.io" },
-];
+] : [];
 
 export default function LoginPage() {
   const router = useRouter();
@@ -119,17 +119,7 @@ export default function LoginPage() {
               <label className="block">
                 <span className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-[var(--mkt-muted)]">
                   Password
-                  <button
-                    type="button"
-                    onClick={() =>
-                      toast.info("Password reset", {
-                        description: "A reset link would be emailed to your work address.",
-                      })
-                    }
-                    className="normal-case tracking-normal text-[var(--mkt-teal)] hover:underline"
-                  >
-                    Forgot?
-                  </button>
+                  <span className="normal-case tracking-normal">Contact your administrator</span>
                 </span>
                 <div className="relative mt-1.5">
                   <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--mkt-muted)]" />
@@ -177,7 +167,7 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <div className="my-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--mkt-muted)]">
+            {process.env.NODE_ENV === "development" && <><div className="my-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--mkt-muted)]">
               <div className="h-px flex-1 bg-[var(--mkt-line)]" />
               Or
               <div className="h-px flex-1 bg-[var(--mkt-line)]" />
@@ -196,9 +186,9 @@ export default function LoginPage() {
                   {p}
                 </button>
               ))}
-            </div>
+            </div></>}
 
-            <details className="mt-6 rounded-lg border border-dashed border-[var(--mkt-line)] p-3">
+            {DEMO_ACCOUNTS.length > 0 && <details className="mt-6 rounded-lg border border-dashed border-[var(--mkt-line)] p-3">
               <summary className="cursor-pointer text-xs font-medium text-[var(--mkt-muted)]">
                 Evaluation accounts
               </summary>
@@ -220,7 +210,7 @@ export default function LoginPage() {
                   </button>
                 ))}
               </div>
-            </details>
+            </details>}
           </div>
         </motion.div>
       </div>
