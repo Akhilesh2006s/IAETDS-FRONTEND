@@ -287,7 +287,7 @@ function AppDetail({ appId, onClose, onSwitch }: { appId: string; onClose: () =>
             <Surface className="border-eoc-accent/30 bg-eoc-accent/[0.06] p-4">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-eoc-accent" />
-                <p className="text-xs font-semibold uppercase tracking-wider text-eoc-accent">AI Health Summary</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-eoc-accent">Health Summary</p>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-eoc-fg2">{app.aiSummary}</p>
             </Surface>

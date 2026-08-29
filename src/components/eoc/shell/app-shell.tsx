@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
 import { CommandPalette } from "./command-palette";
-import { AIAssistant } from "./ai-assistant";
 import { useEocStore } from "@/lib/eoc/store";
 import { useAuthStore } from "@/store/auth";
 
@@ -109,7 +108,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
-      <AIAssistant />
     </div>
   );
 }

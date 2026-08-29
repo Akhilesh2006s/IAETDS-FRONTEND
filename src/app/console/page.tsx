@@ -185,7 +185,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <div className="space-y-4 xl:col-span-2">
-          <SectionHeader title="AI insights & recommendations" description="Proactive opportunities detected across your workspace" />
+          <SectionHeader title="Operational recommendations" description="Prioritized opportunities detected across your workspace" />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {aiInsights.map((insight) => (
               <AIInsightCard key={insight.id} insight={insight} onAction={onInsight} />

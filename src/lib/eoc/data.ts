@@ -55,7 +55,7 @@ export const dashboardStats: ScoreCard[] = [
   { key: "updates", label: "Updates Required", value: 7, delta: -3, spark: spark(9), tone: "warning" },
   { key: "maint", label: "Maintenance Tasks", value: 12, delta: 2, spark: spark(11) },
   { key: "users", label: "Active Users", value: 1284, delta: 8, spark: spark(1200, 16, 60) },
-  { key: "ai", label: "AI Agents Online", value: 9, delta: 1, spark: spark(8), tone: "success" },
+  { key: "automation", label: "Runbooks Active", value: 9, delta: 1, spark: spark(8), tone: "success" },
   { key: "storage", label: "Storage Used", value: 4.2, unit: "TB", delta: 6, spark: spark(38) },
   { key: "cost", label: "Monthly Cost", value: 48250, unit: "₹", delta: -3.4, spark: spark(50000, 16, 1500) },
   { key: "automation", label: "Automation Success", value: 99.2, unit: "%", delta: 0.4, spark: spark(98), tone: "success" },
@@ -128,8 +128,8 @@ export const applications: Application[] = [
     availability: 99.94, security: "A", performance: "A", compliance: "compliant",
     lastMaintenance: "Jun 17, 2026", nextMaintenance: "Jul 08, 2026", cpu: 41, memory: 47,
     monthlyCost: 2800, licenses: { used: 95, total: 120 }, uptime: 99.94,
-    dependencies: ["Identity", "Knowledge", "AI Agents"],
-    aiSummary: "CSAT-impacting latency resolved. Agent deflection up 6% via AI assist.",
+    dependencies: ["Identity", "Knowledge", "Response Automation"],
+    aiSummary: "CSAT-impacting latency resolved. Automated deflection increased by 6%.",
     updateAvailable: null,
   },
   {
@@ -143,8 +143,8 @@ export const applications: Application[] = [
     updateAvailable: null,
   },
   {
-    id: "ai-agents", name: "Cortex AI Agents", category: "AI Agents", icon: "Bot", accent: "#A855F7",
-    owner: "AI Platform", environment: "production", status: "running", health: 99, version: "1.8.0",
+    id: "response-automation", name: "Response Automation", category: "Custom", icon: "Workflow", accent: "#0F766E",
+    owner: "Operations", environment: "production", status: "running", health: 99, version: "1.8.0",
     availability: 99.97, security: "A+", performance: "A", compliance: "compliant",
     lastMaintenance: "Jun 19, 2026", nextMaintenance: "Jul 12, 2026", cpu: 47, memory: 52,
     monthlyCost: 11200, licenses: { used: 9, total: 12 }, uptime: 99.97,
@@ -158,7 +158,7 @@ export const applications: Application[] = [
     availability: 99.8, security: "A", performance: "B", compliance: "compliant",
     lastMaintenance: "Jun 24, 2026", nextMaintenance: "Jul 02, 2026", cpu: 36, memory: 44,
     monthlyCost: 1900, licenses: { used: 900, total: 1300 }, uptime: 99.8,
-    dependencies: ["Storage", "Cortex AI Agents"],
+    dependencies: ["Storage", "Response Automation"],
     aiSummary: "Index rebuild underway to improve semantic search recall. Read-only window active.",
     updateAvailable: null,
   },
@@ -176,16 +176,16 @@ export const deployments: Deployment[] = [
 export const activity: ActivityEvent[] = [
   { id: "a1", actor: "Aarav Mehta", action: "deployed", target: "Helio CRM 8.4.0", category: "deploy", at: "12m ago" },
   { id: "a2", actor: "Security Engine", action: "mitigated threat on", target: "API Gateway", category: "security", at: "38m ago" },
-  { id: "a3", actor: "Riya Kapoor", action: "approved budget for", target: "AI Platform", category: "billing", at: "1h ago" },
+  { id: "a3", actor: "Riya Kapoor", action: "approved budget for", target: "Response Operations", category: "billing", at: "1h ago" },
   { id: "a4", actor: "Auto-Scaler", action: "scaled up", target: "Insight Analytics", category: "system", at: "2h ago" },
-  { id: "a5", actor: "Predictive AI", action: "scheduled maintenance for", target: "Beacon Marketing", category: "maintenance", at: "3h ago" },
+  { id: "a5", actor: "Policy Engine", action: "scheduled maintenance for", target: "Beacon Marketing", category: "maintenance", at: "3h ago" },
   { id: "a6", actor: "Kabir Singh", action: "granted access to", target: "Finance workspace", category: "access", at: "5h ago" },
-  { id: "a7", actor: "Cortex AI", action: "optimized token spend for", target: "Support agents", category: "system", at: "6h ago" },
+  { id: "a7", actor: "Automation Engine", action: "optimized workflow spend for", target: "Support operations", category: "system", at: "6h ago" },
 ];
 
 export const aiInsights: AIInsight[] = [
   { id: "i1", title: "Scale Beacon Marketing before campaign launch", detail: "Memory at 81% with a 40% traffic spike forecast for the Q3 launch. Add 1 capacity unit to avoid degradation.", impact: "high", category: "performance", action: "Apply recommendation" },
-  { id: "i2", title: "Reduce idle AI agent spend", detail: "2 agents idle >70% of the time. Switching to on-demand could save ~₹1,240/mo.", impact: "medium", category: "cost", action: "Review agents" },
+  { id: "i2", title: "Reduce idle worker spend", detail: "2 workers idle >70% of the time. Switching to on-demand could save ~₹1,240/mo.", impact: "medium", category: "cost", action: "Review workers" },
   { id: "i3", title: "Patch Servora ITSM CVE-2026-1187", detail: "Medium-severity dependency vulnerability detected. Patch available in 6.1.0 (already rolling out).", impact: "medium", category: "security", action: "View finding" },
   { id: "i4", title: "Consolidate underused CRM licenses", detail: "60 of 600 seats inactive for 30+ days. Right-size to save ~₹840/mo at renewal.", impact: "low", category: "cost", action: "Open licenses" },
 ];
@@ -205,7 +205,7 @@ export const componentHealth: ComponentHealth[] = [
   { name: "Campaign Engine", app: "Beacon Marketing", health: 74, trend: "down", lastChecked: "2m ago" },
   { name: "Reconciliation Worker", app: "Ledgerline Finance", health: 97, trend: "up", lastChecked: "1m ago" },
   { name: "Search Indexer", app: "Codex Knowledge", health: 85, trend: "up", lastChecked: "3m ago" },
-  { name: "Inference Pool", app: "Cortex AI Agents", health: 99, trend: "flat", lastChecked: "1m ago" },
+  { name: "Automation Pool", app: "Response Automation", health: 99, trend: "flat", lastChecked: "1m ago" },
 ];
 
 export const securityFindings: SecurityFinding[] = [

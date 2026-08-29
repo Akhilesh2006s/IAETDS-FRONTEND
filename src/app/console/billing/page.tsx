@@ -310,7 +310,7 @@ export default function BillingPage() {
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <MiniStat icon={Wallet} label="Wallet balance" value={formatCurrency(walletBalance)} />
-        <MiniStat icon={CreditCard} label="AI credits" value="318k" />
+        <MiniStat icon={CreditCard} label="Automation runs" value="318k" />
         <MiniStat label="Outstanding" value={formatCurrency(outstanding)} tone={outstanding > 0 ? "warning" : "success"} />
         <MiniStat label="Payment success" value="99.4%" tone="success" />
       </div>

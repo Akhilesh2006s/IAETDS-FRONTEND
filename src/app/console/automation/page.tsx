@@ -75,7 +75,7 @@ export default function AutomationPage() {
       <PageHeader
         eyebrow="Workflow engine"
         title="Automation"
-        description="Trigger-based workflows, approvals and AI actions that run your operations automatically — with full execution history."
+        description="Trigger-based workflows, approvals, and controlled actions with full execution history."
         actions={<EButton variant="primary" onClick={() => setOpen(true)}><Plus className="h-4 w-4" /> New workflow</EButton>}
       />
 

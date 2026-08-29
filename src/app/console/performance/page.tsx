@@ -39,7 +39,7 @@ export default function PerformancePage() {
       <PageHeader
         eyebrow="Application intelligence"
         title="Performance Center"
-        description="Latency, throughput, error rates and capacity forecasting with AI-driven bottleneck detection and cost optimization."
+        description="Latency, throughput, error rates, capacity forecasting, bottleneck detection, and cost optimization."
         actions={<EButton variant="primary" onClick={exportOptimization}><Gauge className="h-4 w-4" /> Optimize</EButton>}
       />
 
@@ -81,7 +81,7 @@ export default function PerformancePage() {
         <Surface className="border-eoc-accent/30 bg-eoc-accent/[0.05] p-5">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-eoc-accent" />
-            <p className="text-xs font-semibold uppercase tracking-wider text-eoc-accent">AI Performance Insights</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-eoc-accent">Performance Insights</p>
           </div>
           <ul className="mt-3 space-y-3 text-sm text-eoc-fg2">
             {slow.slice(0, 3).map((a) => (

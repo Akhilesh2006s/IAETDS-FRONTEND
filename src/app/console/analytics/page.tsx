@@ -45,7 +45,7 @@ export default function AnalyticsPage() {
 
   const features = [
     { m: "Applications", adoption: Math.min(100, apps.length * 8) },
-    { m: "AI Agents", adoption: Math.min(100, agents.length * 12) },
+    { m: "Automation", adoption: Math.min(100, agents.length * 12) },
     { m: "Automation", adoption: Math.min(100, state.flows.length * 10) },
     { m: "Integrations", adoption: Math.round((connected / Math.max(1, integrations.length)) * 100) },
     { m: "Storage", adoption: 68 },

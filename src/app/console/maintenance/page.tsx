@@ -67,9 +67,9 @@ export default function MaintenancePage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="AI operations center"
+        eyebrow="Operations center"
         title="Maintenance Center"
-        description="Predictive, scheduled, and automated maintenance with AI root-cause analysis — keep every capability healthy before issues surface."
+        description="Predictive, scheduled, and automated maintenance with evidence-based root-cause analysis."
         actions={
           <>
             <EButton variant="secondary" onClick={() => setCalendarOpen(true)}><CalendarClock className="h-4 w-4" /> Calendar</EButton>
@@ -152,7 +152,7 @@ export default function MaintenancePage() {
         <Surface className="border-eoc-accent/30 bg-eoc-accent/[0.05] p-5">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-eoc-accent" />
-            <p className="text-xs font-semibold uppercase tracking-wider text-eoc-accent">AI Root-Cause Analysis</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-eoc-accent">Root-Cause Analysis</p>
           </div>
           <p className="mt-3 text-sm font-medium text-eoc-fg">Beacon Marketing — memory pressure</p>
           <p className="mt-1.5 text-xs leading-relaxed text-eoc-fg2">

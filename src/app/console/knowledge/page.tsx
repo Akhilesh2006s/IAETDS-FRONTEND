@@ -55,7 +55,7 @@ export default function KnowledgePage() {
       <PageHeader
         eyebrow="Knowledge hub"
         title="Knowledge"
-        description="Documentation, policies, playbooks and runbooks with AI search and version history."
+        description="Documentation, policies, playbooks, runbooks, structured search, and version history."
         actions={<EButton variant="primary" onClick={() => setOpen(true)}><Plus className="h-4 w-4" /> New document</EButton>}
       />
 

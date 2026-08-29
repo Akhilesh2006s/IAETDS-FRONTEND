@@ -2,7 +2,6 @@ import {
   LayoutDashboard,
   Boxes,
   Store,
-  Sparkles,
   Workflow,
   Wrench,
   ShieldCheck,
@@ -48,7 +47,6 @@ export const navGroups: NavGroup[] = [
   {
     label: "Response",
     items: [
-      { label: "Response Copilot", href: `${BASE}/ai-studio`, icon: Sparkles },
       { label: "Runbook Automation", href: `${BASE}/automation`, icon: Workflow },
       { label: "Risk Analytics", href: `${BASE}/analytics`, icon: BarChart3 },
     ],

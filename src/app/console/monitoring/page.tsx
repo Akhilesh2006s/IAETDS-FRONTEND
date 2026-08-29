@@ -34,7 +34,7 @@ export default function MonitoringPage() {
       <PageHeader
         eyebrow="Live observability"
         title="Monitoring"
-        description="Real-time health of services, jobs, queues, webhooks and AI agents — with alerting and historical timelines."
+        description="Real-time health of services, jobs, queues, webhooks, and monitoring agents with historical timelines."
         actions={<EButton variant="secondary" onClick={() => router.push("/console/notifications")}><Activity className="h-4 w-4" /> Alert center</EButton>}
       />
 
