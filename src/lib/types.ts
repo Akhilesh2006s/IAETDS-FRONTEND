@@ -19,6 +19,9 @@ export interface User {
   lastLoginAt?: string;
   lastActiveAt?: string;
   createdAt?: string;
+  workspaceId?: string;
+  workspaceName?: string;
+  workspacePlan?: string;
 }
 
 export interface Pagination {

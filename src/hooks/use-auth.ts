@@ -25,6 +25,21 @@ export function useLogin() {
   });
 }
 
+export function useRegister() {
+  const setAuth = useAuthStore((s) => s.setAuth);
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async (payload: { name: string; companyName: string; email: string; password: string }) => {
+      const { data } = await api.post("/auth/register", payload);
+      return data.data;
+    },
+    onSuccess: (data) => {
+      setAuth(data.user, data.accessToken, data.permissions);
+      router.push("/console");
+    },
+  });
+}
+
 export function useLogout() {
   const clear = useAuthStore((s) => s.clear);
   const router = useRouter();

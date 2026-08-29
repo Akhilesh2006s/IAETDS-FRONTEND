@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { flatNav, BASE } from "@/lib/eoc/nav";
 import { currentUser } from "@/lib/eoc/data";
 import { useAuthStore } from "@/store/auth";
+import { useLogout } from "@/hooks/use-auth";
 import { selectUnreadCount, useEocStore } from "@/lib/eoc/store";
 import { StatusPill } from "../primitives";
 
@@ -40,6 +41,7 @@ export function Topbar({
   const markAllRead = useEocStore((s) => s.markAllRead);
   const unread = useEocStore(selectUnreadCount);
   const authUser = useAuthStore((s) => s.user);
+  const logout = useLogout();
 
   const current = flatNav.find((n) =>
     n.href === BASE ? pathname === BASE : pathname.startsWith(n.href),
@@ -218,7 +220,7 @@ export function Topbar({
               </DropdownMenu.Item>
             ))}
             <DropdownMenu.Separator className="my-1 h-px bg-eoc-border" />
-            <DropdownMenu.Item className={cn(itemCls, "text-eoc-danger data-[highlighted]:text-eoc-danger")} onSelect={() => router.push("/login")}>
+            <DropdownMenu.Item className={cn(itemCls, "text-eoc-danger data-[highlighted]:text-eoc-danger")} onSelect={() => logout.mutate()}>
               Sign out
             </DropdownMenu.Item>
           </DropdownMenu.Content>

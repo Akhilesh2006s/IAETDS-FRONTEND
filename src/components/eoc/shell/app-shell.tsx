@@ -24,6 +24,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     useEocStore.persist.rehydrate();
   }, []);
 
+  React.useEffect(() => {
+    if (user?.workspaceName && useEocStore.getState().settings.workspaceName !== user.workspaceName) {
+      useEocStore.getState().updateSettings({ workspaceName: user.workspaceName, workspacePlan: user.workspacePlan || "trial" });
+    }
+  }, [user]);
+
   // Keep the authenticated console aligned with the white marketing experience.
   React.useEffect(() => {
     setTheme("light");

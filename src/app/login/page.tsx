@@ -92,8 +92,8 @@ export default function LoginPage() {
             <h2 className="font-display text-2xl text-[var(--mkt-ink)]">Sign in</h2>
             <p className="mt-1.5 text-sm text-[var(--mkt-muted)]">
               Use your work credentials. New customer?{" "}
-              <Link href="/get-started" className="font-semibold text-[var(--mkt-teal)] hover:underline">
-                Start provisioning
+              <Link href="/signup" className="font-semibold text-[var(--mkt-teal)] hover:underline">
+                Create workspace
               </Link>
             </p>
 
