@@ -41,16 +41,16 @@ export const navGroups: NavGroup[] = [
     label: "Overview",
     items: [
       { label: "Dashboard", href: `${BASE}`, icon: LayoutDashboard },
-      { label: "Applications", href: `${BASE}/applications`, icon: Boxes, badge: "7" },
-      { label: "Marketplace", href: `${BASE}/marketplace`, icon: Store },
+      { label: "Infrastructure", href: `${BASE}/applications`, icon: Boxes, badge: "7" },
+      { label: "Connector Catalog", href: `${BASE}/marketplace`, icon: Store },
     ],
   },
   {
-    label: "Intelligence",
+    label: "Response",
     items: [
-      { label: "AI Studio", href: `${BASE}/ai-studio`, icon: Sparkles },
-      { label: "Automation", href: `${BASE}/automation`, icon: Workflow },
-      { label: "Analytics", href: `${BASE}/analytics`, icon: BarChart3 },
+      { label: "Response Copilot", href: `${BASE}/ai-studio`, icon: Sparkles },
+      { label: "Runbook Automation", href: `${BASE}/automation`, icon: Workflow },
+      { label: "Risk Analytics", href: `${BASE}/analytics`, icon: BarChart3 },
     ],
   },
   {

@@ -24,7 +24,7 @@ const spark = (base: number, n = 16, jitter = 8) =>
   );
 
 export const workspace = {
-  name: "Northwind Industries",
+  name: "IAETDS Workspace",
   plan: "Enterprise",
   region: "EU-West",
   members: 1284,
@@ -38,7 +38,7 @@ export const currentUser = {
 };
 
 export const workspaces = [
-  { id: "nw", name: "Northwind Industries", plan: "Enterprise" },
+  { id: "iaetds", name: "IAETDS Workspace", plan: "Managed Defense" },
   { id: "ac", name: "Acme Robotics", plan: "Business" },
   { id: "hl", name: "Helios Labs", plan: "Professional" },
 ];

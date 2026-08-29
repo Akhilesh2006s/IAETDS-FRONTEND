@@ -59,13 +59,13 @@ export default function AIStudioPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Central intelligence"
-        title="AI Studio"
-        description="Build, deploy and govern AI agents, prompts, knowledge sources and workflows from a single intelligent platform."
+        eyebrow="Incident intelligence"
+        title="Response Copilot"
+        description="Specialized analysis workers correlate telemetry, summarize incidents, recommend runbooks, and prepare evidence for human approval."
         actions={
           <>
-            <EButton variant="secondary" onClick={() => setKeysOpen(true)}><KeyRound className="h-4 w-4" /> API keys</EButton>
-            <EButton variant="primary" onClick={() => setOpen(true)}><Plus className="h-4 w-4" /> New agent</EButton>
+            <EButton variant="secondary" onClick={() => setKeysOpen(true)}><KeyRound className="h-4 w-4" /> Connector access</EButton>
+            <EButton variant="primary" onClick={() => setOpen(true)}><Plus className="h-4 w-4" /> New response worker</EButton>
           </>
         }
       />
@@ -90,15 +90,15 @@ export default function AIStudioPage() {
         </form>
       </Modal>
 
-      <Modal open={keysOpen} onOpenChange={setKeysOpen} title="Workspace API keys" description="Demo workspace keys for local development.">
+      <Modal open={keysOpen} onOpenChange={setKeysOpen} title="Connector access" description="Provider credentials are managed as encrypted, scope-limited connections.">
         <div className="space-y-3 p-5">
           <div className="rounded-xl border border-eoc-border bg-white/[0.02] p-3">
             <p className="text-xs text-eoc-muted">Workspace</p>
             <p className="font-mono text-sm text-eoc-fg">{settings.workspaceName}</p>
           </div>
           <div className="rounded-xl border border-eoc-border bg-white/[0.02] p-3">
-            <p className="text-xs text-eoc-muted">Primary key</p>
-            <p className="font-mono text-sm text-eoc-accent">eoc_live_sk_demo_••••••••4242</p>
+            <p className="text-xs text-eoc-muted">Credential visibility</p>
+            <p className="text-sm font-medium text-eoc-fg">Secrets are never displayed after connection</p>
           </div>
           <p className="text-xs text-eoc-muted">Rotate keys and manage scopes in production via the Identity & Access API.</p>
         </div>
@@ -108,15 +108,15 @@ export default function AIStudioPage() {
       </Modal>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Stat label="Active agents" value={String(activeCount)} />
-        <Stat label="Total agents" value={String(agents.length)} />
-        <Stat label="Avg success" value={agents.length ? `${Math.round(agents.reduce((s, a) => s + a.success, 0) / agents.length)}%` : "—"} />
-        <Stat label="AI spend (mo)" value="₹6,300" />
+        <Stat label="Active workers" value={String(activeCount)} />
+        <Stat label="Response workers" value={String(agents.length)} />
+        <Stat label="Analysis accuracy" value={agents.length ? `${Math.round(agents.reduce((s, a) => s + a.success, 0) / agents.length)}%` : "—"} />
+        <Stat label="Incidents assisted" value="47" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <div className="space-y-4 xl:col-span-2">
-          <SectionHeader title="AI agents" description="Autonomous agents deployed across your workspace" />
+          <SectionHeader title="Response workers" description="Purpose-built intelligence for triage, investigation, and evidence" />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {agents.map((a) => (
               <Surface key={a.name} hover className="p-4">

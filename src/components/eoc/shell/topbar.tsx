@@ -16,13 +16,14 @@ import {
 import { cn } from "@/lib/utils";
 import { flatNav, BASE } from "@/lib/eoc/nav";
 import { currentUser } from "@/lib/eoc/data";
+import { useAuthStore } from "@/store/auth";
 import { selectUnreadCount, useEocStore } from "@/lib/eoc/store";
 import { StatusPill } from "../primitives";
 
 const menuCls =
-  "z-[60] min-w-[220px] overflow-hidden rounded-xl border border-eoc-border bg-eoc-elevated/95 p-1.5 shadow-2xl backdrop-blur-xl data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95";
+  "z-[60] min-w-[220px] overflow-hidden rounded-xl border border-eoc-border bg-white p-1.5 shadow-xl data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95";
 const itemCls =
-  "flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-eoc-fg2 outline-none transition-colors data-[highlighted]:bg-white/[0.07] data-[highlighted]:text-eoc-fg";
+  "flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-eoc-fg2 outline-none transition-colors data-[highlighted]:bg-slate-100 data-[highlighted]:text-eoc-fg";
 
 export function Topbar({
   onOpenPalette,
@@ -38,6 +39,7 @@ export function Topbar({
   const markRead = useEocStore((s) => s.markRead);
   const markAllRead = useEocStore((s) => s.markAllRead);
   const unread = useEocStore(selectUnreadCount);
+  const authUser = useAuthStore((s) => s.user);
 
   const current = flatNav.find((n) =>
     n.href === BASE ? pathname === BASE : pathname.startsWith(n.href),
@@ -47,15 +49,15 @@ export function Topbar({
     <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-eoc-border bg-eoc-bg/80 px-4 backdrop-blur-xl lg:px-6">
       <button
         onClick={onOpenSidebar}
-        className="flex h-9 w-9 items-center justify-center rounded-lg text-eoc-fg2 hover:bg-white/5 lg:hidden"
+        className="flex h-9 w-9 items-center justify-center rounded-lg text-eoc-fg2 hover:bg-slate-100 lg:hidden"
       >
         <Menu className="h-5 w-5" />
       </button>
 
       {/* Workspace switcher */}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="flex items-center gap-2 rounded-lg border border-eoc-border bg-white/[0.03] px-2.5 py-1.5 text-sm text-eoc-fg transition-colors hover:bg-white/[0.07] focus:outline-none">
-          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-eoc-accent to-[#7C3AED] text-[10px] font-bold text-white">
+        <DropdownMenu.Trigger className="flex items-center gap-2 rounded-lg border border-eoc-border bg-white px-2.5 py-1.5 text-sm text-eoc-fg shadow-sm transition-colors hover:bg-slate-50 focus:outline-none">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-eoc-accent text-[10px] font-bold text-white">
             {settings.workspaceName.slice(0, 2).toUpperCase()}
           </span>
           <span className="hidden max-w-[140px] truncate font-medium sm:block">{settings.workspaceName}</span>
@@ -67,7 +69,7 @@ export function Topbar({
               Workspace
             </DropdownMenu.Label>
             <DropdownMenu.Item className={itemCls} onSelect={() => router.push("/console/settings")}>
-              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white/5 text-[10px] font-bold text-eoc-fg2">
+              <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-[10px] font-bold text-eoc-fg2">
                 {settings.workspaceName.slice(0, 2).toUpperCase()}
               </span>
               <div className="flex-1">
@@ -93,7 +95,7 @@ export function Topbar({
       {/* Search trigger */}
       <button
         onClick={onOpenPalette}
-        className="group ml-auto flex h-9 items-center gap-2 rounded-lg border border-eoc-border bg-white/[0.03] px-3 text-sm text-eoc-muted transition-colors hover:bg-white/[0.07] md:w-72"
+        className="group ml-auto flex h-9 items-center gap-2 rounded-lg border border-eoc-border bg-white px-3 text-sm text-eoc-muted shadow-sm transition-colors hover:bg-slate-50 md:w-72"
       >
         <Search className="h-4 w-4" />
         <span className="hidden flex-1 text-left md:block">Search everything…</span>
@@ -104,7 +106,7 @@ export function Topbar({
 
       {/* Quick create */}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="flex h-9 items-center gap-1.5 rounded-lg bg-eoc-accent px-3 text-sm font-medium text-white shadow-[0_4px_18px_-6px_rgba(79,124,255,0.7)] transition-colors hover:bg-eoc-accent/90 focus:outline-none">
+        <DropdownMenu.Trigger className="flex h-9 items-center gap-1.5 rounded-lg bg-eoc-accent px-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-eoc-accent/90 focus:outline-none">
           <Plus className="h-4 w-4" />
           <span className="hidden sm:block">Create</span>
         </DropdownMenu.Trigger>
@@ -128,7 +130,7 @@ export function Topbar({
 
       {/* Notifications */}
       <Popover.Root>
-        <Popover.Trigger className="relative flex h-9 w-9 items-center justify-center rounded-lg text-eoc-fg2 transition-colors hover:bg-white/5 focus:outline-none">
+        <Popover.Trigger className="relative flex h-9 w-9 items-center justify-center rounded-lg text-eoc-fg2 transition-colors hover:bg-slate-100 focus:outline-none">
           <Bell className="h-[18px] w-[18px]" />
           {unread > 0 && (
             <span className="absolute right-1.5 top-1.5 flex h-2 w-2">
@@ -141,7 +143,7 @@ export function Topbar({
           <Popover.Content
             align="end"
             sideOffset={8}
-            className="z-[60] w-[360px] overflow-hidden rounded-xl border border-eoc-border bg-eoc-elevated/95 shadow-2xl backdrop-blur-xl"
+            className="z-[60] w-[360px] overflow-hidden rounded-xl border border-eoc-border bg-white shadow-xl"
           >
             <div className="flex items-center justify-between border-b border-eoc-border px-4 py-3">
               <p className="text-sm font-semibold text-eoc-fg">Notifications</p>
@@ -159,8 +161,8 @@ export function Topbar({
                   key={n.id}
                   onClick={() => markRead(n.id)}
                   className={cn(
-                    "flex w-full gap-3 border-b border-eoc-border px-4 py-3 text-left transition-colors hover:bg-white/[0.03]",
-                    !n.read && "bg-white/[0.02]",
+                    "flex w-full gap-3 border-b border-eoc-border px-4 py-3 text-left transition-colors hover:bg-slate-50",
+                    !n.read && "bg-teal-50/60",
                   )}
                 >
                   <span
@@ -181,7 +183,7 @@ export function Topbar({
             </div>
             <button
               onClick={() => router.push("/console/notifications")}
-              className="w-full py-2.5 text-center text-xs font-medium text-eoc-accent hover:bg-white/[0.03]"
+              className="w-full py-2.5 text-center text-xs font-medium text-eoc-accent hover:bg-slate-50"
             >
               View all notifications
             </button>
@@ -191,9 +193,9 @@ export function Topbar({
 
       {/* User menu */}
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="flex items-center gap-2 rounded-lg pl-1 pr-2 outline-none transition-colors hover:bg-white/5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-eoc-accent to-[#7C3AED] text-xs font-semibold text-white">
-            {currentUser.initials}
+        <DropdownMenu.Trigger className="flex items-center gap-2 rounded-lg pl-1 pr-2 outline-none transition-colors hover:bg-slate-100">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-eoc-accent text-xs font-semibold text-white">
+            {authUser?.name?.split(" ").map((part) => part[0]).slice(0, 2).join("").toUpperCase() || currentUser.initials}
           </span>
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>

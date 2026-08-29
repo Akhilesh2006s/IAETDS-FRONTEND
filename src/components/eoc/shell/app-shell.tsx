@@ -25,9 +25,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     useEocStore.persist.rehydrate();
   }, []);
 
-  // Dark-only experience
+  // Keep the authenticated console aligned with the white marketing experience.
   React.useEffect(() => {
-    setTheme("dark");
+    setTheme("light");
   }, [setTheme]);
 
   // Cmd/Ctrl + K
@@ -51,16 +51,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [hydrated, user, router, pathname]);
 
   if (!hydrated || !user) {
-    return <div className="dark flex min-h-screen items-center justify-center bg-eoc-bg text-sm text-eoc-muted">Securing workspace…</div>;
+    return <div className="flex min-h-screen items-center justify-center bg-eoc-bg text-sm text-eoc-muted">Securing workspace…</div>;
   }
 
   return (
-    <div className="dark min-h-screen bg-eoc-bg text-eoc-fg antialiased">
+    <div className="min-h-screen bg-eoc-bg text-eoc-fg antialiased">
       <div className="pointer-events-none fixed inset-0 eoc-grid opacity-[0.55]" />
       <div className="pointer-events-none fixed inset-x-0 top-0 h-[420px] eoc-radial" />
 
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-eoc-border bg-eoc-surface/60 backdrop-blur-xl lg:block">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-eoc-border bg-white lg:block">
         <Sidebar />
       </aside>
 

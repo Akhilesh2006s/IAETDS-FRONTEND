@@ -50,8 +50,8 @@ const btn = cva(
         primary:
           "bg-eoc-accent text-white hover:bg-eoc-accent/90 shadow-[0_4px_20px_-6px_rgba(79,124,255,0.6)]",
         secondary:
-          "border border-eoc-border bg-white/5 text-eoc-fg hover:bg-white/10 hover:border-eoc-border-strong",
-        ghost: "text-eoc-fg2 hover:bg-white/5 hover:text-eoc-fg",
+          "border border-eoc-border bg-white text-eoc-fg shadow-sm hover:bg-slate-50 hover:border-eoc-border-strong",
+        ghost: "text-eoc-fg2 hover:bg-slate-100 hover:text-eoc-fg",
         danger: "bg-eoc-danger/90 text-white hover:bg-eoc-danger",
       },
       size: {

@@ -81,7 +81,7 @@ const TONE: Record<string, string> = {
   warning: "bg-eoc-warning/12 text-eoc-warning ring-eoc-warning/20",
   danger: "bg-eoc-danger/12 text-eoc-danger ring-eoc-danger/20",
   info: "bg-eoc-info/12 text-eoc-info ring-eoc-info/20",
-  neutral: "bg-white/5 text-eoc-fg2 ring-white/10",
+  neutral: "bg-slate-100 text-eoc-fg2 ring-slate-200",
 };
 
 export type Tone = keyof typeof TONE;
@@ -184,7 +184,7 @@ export function ScoreRing({
   return (
     <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(15,23,42,0.08)" strokeWidth={stroke} />
         <motion.circle
           cx={size / 2}
           cy={size / 2}
@@ -226,7 +226,7 @@ export function ProgressBar({
     neutral: "bg-eoc-fg2",
   };
   return (
-    <div className={cn("h-1.5 w-full overflow-hidden rounded-full bg-white/8", className)}>
+    <div className={cn("h-1.5 w-full overflow-hidden rounded-full bg-slate-100", className)}>
       <motion.div
         className={cn("h-full rounded-full", colors[tone])}
         initial={{ width: 0 }}
@@ -280,7 +280,7 @@ export function AnimatedNumber({
 
 /* ── Skeleton ── */
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn("animate-pulse rounded-lg bg-white/5", className)} />;
+  return <div className={cn("animate-pulse rounded-lg bg-slate-100", className)} />;
 }
 
 /* ── Empty state ── */
@@ -297,7 +297,7 @@ export function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-eoc-border bg-eoc-surface/40 px-6 py-14 text-center">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-eoc-fg2">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-eoc-fg2">
         <Icon className="h-6 w-6" />
       </div>
       <p className="mt-4 text-sm font-medium text-eoc-fg">{title}</p>
