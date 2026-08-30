@@ -87,6 +87,10 @@ export const useOnboardStore = create<OnboardState>()(
         set({ submittedAt: new Date().toISOString(), referenceId }),
       reset: () => set({ ...initial, hosts: [emptyHost()], submittedAt: undefined, referenceId: undefined }),
     }),
-    { name: "iaetds-onboard" },
+    {
+      name: "iaetds-onboard",
+      // Never persist organization, infrastructure, host, or credential data in the browser.
+      partialize: (state) => ({ services: state.services }),
+    },
   ),
 );

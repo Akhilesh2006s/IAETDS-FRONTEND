@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
@@ -23,6 +23,8 @@ import {
 } from "@/lib/marketing/services";
 import { useOnboardStore, type InfraHost } from "@/lib/marketing/onboard-store";
 import { cn } from "@/lib/utils";
+import { api, apiError } from "@/lib/api";
+import { useAuthStore } from "@/store/auth";
 
 const STEPS = ["Services", "Organization", "Infrastructure", "Review"] as const;
 
@@ -47,6 +49,9 @@ export default function GetStartedPage() {
 
 function GetStartedInner() {
   const params = useSearchParams();
+  const router = useRouter();
+  const user = useAuthStore((s) => s.user);
+  const hydrated = useAuthStore((s) => s.hydrated);
   const store = useOnboardStore();
   const [step, setStep] = React.useState(0);
   const [submitting, setSubmitting] = React.useState(false);
@@ -64,6 +69,11 @@ function GetStartedInner() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
+
+  React.useEffect(() => {
+    if (hydrated && !user) router.replace("/signup");
+    if (user) store.patch({ companyName: user.workspaceName || store.companyName, contactName: user.name, workEmail: user.email });
+  }, [hydrated, user, router]);
 
   const monthly = totalMonthly(store.services);
 
@@ -117,15 +127,21 @@ function GetStartedInner() {
   const submit = async () => {
     if (!validateStep()) return;
     setSubmitting(true);
-    // Simulated secure provisioning handoff
-    await new Promise((r) => setTimeout(r, 1800));
-    const ref = genRef();
-    store.markSubmitted(ref);
-    setSubmitting(false);
-    setDone(true);
-    toast.success("Provisioning request received", {
-      description: `Reference ${ref} · estimated ${formatInr(monthly)}/mo`,
-    });
+    try {
+      const { data } = await api.post("/onboarding", {
+        services: store.services, companyName: store.companyName, contactName: store.contactName,
+        workEmail: store.workEmail, phone: store.phone, primaryDomain: store.primaryDomain,
+        additionalDomains: store.additionalDomains, backendApiUrl: store.backendApiUrl,
+        stagingApiUrl: store.stagingApiUrl, webhookUrl: store.webhookUrl, hosts: store.hosts, notes: store.notes,
+      });
+      const ref = data.data.referenceId as string;
+      store.markSubmitted(ref);
+      store.setHosts(store.hosts.map((host) => ({ ...host, secret: "" })));
+      setDone(true);
+      toast.success("Provisioning request received", { description: `Reference ${ref} · estimated ${formatInr(monthly)}/mo` });
+    } catch (error) {
+      toast.error("Provisioning submission failed", { description: apiError(error) });
+    } finally { setSubmitting(false); }
   };
 
   if (done) {

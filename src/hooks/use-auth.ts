@@ -35,7 +35,7 @@ export function useRegister() {
     },
     onSuccess: (data) => {
       setAuth(data.user, data.accessToken, data.permissions);
-      router.push("/console");
+      router.push("/get-started");
     },
   });
 }
