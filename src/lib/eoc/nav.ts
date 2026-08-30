@@ -18,6 +18,7 @@ import {
   Bell,
   Settings,
   Siren,
+  ClipboardCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -74,6 +75,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Identity & Access", href: `${BASE}/identity`, icon: KeyRound },
       { label: "Audit Logs", href: `${BASE}/audit`, icon: ScrollText },
+      { label: "Maintenance Reports", href: `${BASE}/maintenance-reports`, icon: ClipboardCheck },
       { label: "Storage", href: `${BASE}/storage`, icon: Database },
       { label: "Knowledge", href: `${BASE}/knowledge`, icon: BookOpen },
     ],
