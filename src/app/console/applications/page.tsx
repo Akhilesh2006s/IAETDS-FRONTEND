@@ -19,7 +19,7 @@ export default function ApplicationsPage(){
   const [query,setQuery]=React.useState(""); const [open,setOpen]=React.useState(false); const [selected,setSelected]=React.useState<Asset>(); const [form,setForm]=React.useState(blank());
   const list=useResourceList<Asset>("assets",{limit:100,search:query}); const mutations=useResourceMutation("assets"); const assets=list.data?.data||[];
   const showAdd=()=>{setForm(blank());setOpen(true)};
-  const add=async(e:React.FormEvent)=>{e.preventDefault();try{await mutations.create.mutateAsync({...form,status:"operational",healthScore:100});toast.success("Asset added to this workspace");setOpen(false)}catch(err){toast.error(apiError(err))}};
+  const add=async(e:React.FormEvent)=>{e.preventDefault();try{await mutations.create.mutateAsync({...form,status:"operational",healthScore:null});toast.success("Asset added to this workspace");setOpen(false)}catch(err){toast.error(apiError(err))}};
   const remove=async(a:Asset)=>{if(!confirm(`Remove ${a.name} from this workspace?`))return;try{await mutations.remove.mutateAsync(a._id);setSelected(undefined);toast.success("Asset removed")}catch(err){toast.error(apiError(err))}};
   return <div className="space-y-6">
     <PageHeader eyebrow="Tenant asset registry" title="Infrastructure & Applications" description="Only assets registered inside this client workspace appear here." actions={<EButton variant="primary" onClick={showAdd}><Plus/>Add asset</EButton>}/>

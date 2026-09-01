@@ -7,6 +7,7 @@ import {
   Settings,
   Siren,
   PlugZap,
+  HeartPulse,
   type LucideIcon,
 } from "lucide-react";
 
@@ -31,6 +32,7 @@ export const navGroups: NavGroup[] = [
       { label: "Dashboard", href: `${BASE}`, icon: LayoutDashboard },
       { label: "Infrastructure", href: `${BASE}/applications`, icon: Boxes },
       { label: "Connections", href: `${BASE}/connections`, icon: PlugZap },
+      { label: "Health & Security", href: `${BASE}/health`, icon: HeartPulse },
     ],
   },
   {
