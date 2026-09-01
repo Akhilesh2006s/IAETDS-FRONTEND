@@ -1,23 +1,11 @@
 import {
   LayoutDashboard,
   Boxes,
-  Workflow,
   Wrench,
-  ShieldCheck,
-  Gauge,
-  Activity,
-  BarChart3,
-  CreditCard,
-  Landmark,
-  Plug,
   KeyRound,
   ScrollText,
-  Database,
-  BookOpen,
-  Bell,
   Settings,
   Siren,
-  ClipboardCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -44,28 +32,10 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Response",
-    items: [
-      { label: "Runbook Automation", href: `${BASE}/automation`, icon: Workflow },
-      { label: "Risk Analytics", href: `${BASE}/analytics`, icon: BarChart3 },
-    ],
-  },
-  {
     label: "Operations",
     items: [
-      { label: "Incident Workbench", href: `${BASE}/incidents`, icon: Siren, badge: "1" },
-      { label: "Maintenance Center", href: `${BASE}/maintenance`, icon: Wrench },
-      { label: "Security Center", href: `${BASE}/security`, icon: ShieldCheck },
-      { label: "Performance Center", href: `${BASE}/performance`, icon: Gauge },
-      { label: "Monitoring", href: `${BASE}/monitoring`, icon: Activity },
-    ],
-  },
-  {
-    label: "Business",
-    items: [
-      { label: "Billing & Payments", href: `${BASE}/billing`, icon: CreditCard },
-      { label: "Finance", href: `${BASE}/finance`, icon: Landmark },
-      { label: "Integrations", href: `${BASE}/integrations`, icon: Plug },
+      { label: "Incident Workbench", href: `${BASE}/incidents`, icon: Siren },
+      { label: "Maintenance Reports", href: `${BASE}/maintenance-reports`, icon: Wrench },
     ],
   },
   {
@@ -73,15 +43,11 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Identity & Access", href: `${BASE}/identity`, icon: KeyRound },
       { label: "Audit Logs", href: `${BASE}/audit`, icon: ScrollText },
-      { label: "Maintenance Reports", href: `${BASE}/maintenance-reports`, icon: ClipboardCheck },
-      { label: "Storage", href: `${BASE}/storage`, icon: Database },
-      { label: "Knowledge", href: `${BASE}/knowledge`, icon: BookOpen },
     ],
   },
   {
     label: "Workspace",
     items: [
-      { label: "Notifications", href: `${BASE}/notifications`, icon: Bell },
       { label: "Settings", href: `${BASE}/settings`, icon: Settings },
     ],
   },

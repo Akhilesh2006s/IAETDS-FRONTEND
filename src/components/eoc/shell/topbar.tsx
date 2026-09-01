@@ -3,9 +3,7 @@
 import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import * as Popover from "@radix-ui/react-popover";
 import {
-  Bell,
   Check,
   ChevronDown,
   Command as CommandIcon,
@@ -18,7 +16,7 @@ import { flatNav, BASE } from "@/lib/eoc/nav";
 import { currentUser } from "@/lib/eoc/data";
 import { useAuthStore } from "@/store/auth";
 import { useLogout } from "@/hooks/use-auth";
-import { selectUnreadCount, useEocStore } from "@/lib/eoc/store";
+import { useEocStore } from "@/lib/eoc/store";
 import { StatusPill } from "../primitives";
 
 const menuCls =
@@ -36,10 +34,6 @@ export function Topbar({
   const pathname = usePathname();
   const router = useRouter();
   const settings = useEocStore((s) => s.settings);
-  const notifications = useEocStore((s) => s.notifications);
-  const markRead = useEocStore((s) => s.markRead);
-  const markAllRead = useEocStore((s) => s.markAllRead);
-  const unread = useEocStore(selectUnreadCount);
   const authUser = useAuthStore((s) => s.user);
   const logout = useLogout();
 
@@ -115,10 +109,8 @@ export function Topbar({
         <DropdownMenu.Portal>
           <DropdownMenu.Content className={menuCls} align="end" sideOffset={8}>
             {[
-              ["New automation", "/console/automation"],
-              ["Schedule maintenance", "/console/maintenance"],
-              ["Invite member", "/console/identity"],
-              ["Create report", "/console/analytics"],
+              ["Add infrastructure asset", "/console/applications"],
+              ["Prepare maintenance report", "/console/maintenance-reports"],
             ].map(([label, href]) => (
               <DropdownMenu.Item key={label} className={itemCls} onSelect={() => router.push(href)}>
                 <Plus className="h-4 w-4 text-eoc-muted" />
@@ -128,69 +120,6 @@ export function Topbar({
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
-
-      {/* Notifications */}
-      <Popover.Root>
-        <Popover.Trigger className="relative flex h-9 w-9 items-center justify-center rounded-lg text-eoc-fg2 transition-colors hover:bg-slate-100 focus:outline-none">
-          <Bell className="h-[18px] w-[18px]" />
-          {unread > 0 && (
-            <span className="absolute right-1.5 top-1.5 flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-eoc-danger opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-eoc-danger" />
-            </span>
-          )}
-        </Popover.Trigger>
-        <Popover.Portal>
-          <Popover.Content
-            align="end"
-            sideOffset={8}
-            className="z-[60] w-[360px] overflow-hidden rounded-xl border border-eoc-border bg-white shadow-xl"
-          >
-            <div className="flex items-center justify-between border-b border-eoc-border px-4 py-3">
-              <p className="text-sm font-semibold text-eoc-fg">Notifications</p>
-              <button
-                onClick={() => markAllRead()}
-                className="text-xs font-medium text-eoc-accent hover:text-eoc-fg disabled:text-eoc-muted"
-                disabled={unread === 0}
-              >
-                Mark all read
-              </button>
-            </div>
-            <div className="max-h-[400px] overflow-y-auto [scrollbar-width:thin]">
-              {notifications.slice(0, 12).map((n) => (
-                <button
-                  key={n.id}
-                  onClick={() => markRead(n.id)}
-                  className={cn(
-                    "flex w-full gap-3 border-b border-eoc-border px-4 py-3 text-left transition-colors hover:bg-slate-50",
-                    !n.read && "bg-teal-50/60",
-                  )}
-                >
-                  <span
-                    className={cn("mt-1.5 h-2 w-2 shrink-0 rounded-full", {
-                      "bg-eoc-info": n.tone === "info",
-                      "bg-eoc-success": n.tone === "success",
-                      "bg-eoc-warning": n.tone === "warning",
-                      "bg-eoc-danger": n.tone === "danger",
-                    })}
-                  />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-eoc-fg">{n.title}</p>
-                    <p className="mt-0.5 text-xs text-eoc-fg2">{n.detail}</p>
-                    <p className="mt-1 text-[11px] text-eoc-muted">{n.at}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
-            <button
-              onClick={() => router.push("/console/notifications")}
-              className="w-full py-2.5 text-center text-xs font-medium text-eoc-accent hover:bg-slate-50"
-            >
-              View all notifications
-            </button>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
 
       {/* User menu */}
       <DropdownMenu.Root>
@@ -211,7 +140,6 @@ export function Topbar({
             {[
               ["Profile & preferences", "/console/settings"],
               ["Identity & access", "/console/identity"],
-              ["Billing & payments", "/console/billing"],
               ["Audit logs", "/console/audit"],
             ].map(([label, href]) => (
               <DropdownMenu.Item key={label} className={itemCls} onSelect={() => router.push(href)}>

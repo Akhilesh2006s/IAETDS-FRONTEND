@@ -8,14 +8,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Boxes,
   CornerDownLeft,
-  Plus,
   Search,
-  ShieldCheck,
-  Sparkles,
-  Wrench,
 } from "lucide-react";
 import { flatNav } from "@/lib/eoc/nav";
-import { applications } from "@/lib/eoc/data";
 import { StatusPill } from "../primitives";
 
 export function CommandPalette({
@@ -74,23 +69,6 @@ export function CommandPalette({
                       No results found.
                     </Command.Empty>
 
-                    <Command.Group heading="Quick Actions" className="eoc-cmd-group">
-                      <Item onSelect={() => go("/console/security")} icon={<ShieldCheck className="h-4 w-4 text-eoc-success" />} label="Run security scan" badge="Action" />
-                      <Item onSelect={() => go("/console/maintenance")} icon={<Wrench className="h-4 w-4 text-eoc-warning" />} label="Schedule maintenance" badge="Action" />
-                    </Command.Group>
-
-                    <Command.Group heading="Applications" className="eoc-cmd-group">
-                      {applications.map((app) => (
-                        <Item
-                          key={app.id}
-                          onSelect={() => go(`/console/applications?app=${app.id}`)}
-                          icon={<Boxes className="h-4 w-4" style={{ color: app.accent }} />}
-                          label={app.name}
-                          meta={`${app.category} · v${app.version}`}
-                          badge="App"
-                        />
-                      ))}
-                    </Command.Group>
 
                     <Command.Group heading="Navigate" className="eoc-cmd-group">
                       {flatNav.map((item) => (
