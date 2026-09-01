@@ -54,7 +54,10 @@ export interface Asset {
   ipAddress: string;
   os: string;
   owner: string;
-  healthScore: number;
+  healthScore?: number | null;
+  provider?: "digitalocean" | "mongodb_atlas" | "";
+  providerResourceId?: string;
+  telemetryStatus?: "manual" | "connected" | "awaiting_metrics" | "error";
   purchaseDate?: string;
   warrantyExpiry?: string;
   lifecycleStage: string;
