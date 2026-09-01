@@ -27,6 +27,8 @@ import {
   selectSpendByApp,
 } from "@/lib/eoc/selectors";
 import { useEocStore } from "@/lib/eoc/store";
+import { useDashboard } from "@/hooks/use-analytics";
+import { Boxes } from "lucide-react";
 
 const deployIcon = {
   succeeded: { icon: CheckCircle2, tone: "success" as Tone, bg: "bg-eoc-success/10", fg: "text-eoc-success" },
@@ -40,6 +42,7 @@ export default function DashboardPage() {
   const state = useEocStore();
   const settings = useEocStore((s) => s.settings);
   const scheduleTask = useEocStore((s) => s.scheduleTask);
+  const liveDashboard = useDashboard();
 
   const stats = selectDashboardStats(state);
   const spendByApp = selectSpendByApp(state);
@@ -47,6 +50,10 @@ export default function DashboardPage() {
   const maintenance = selectOpenMaintenance(state);
   const activity = selectAuditEvents(state);
   const securityScore = selectSecurityScore(state);
+
+  if (!liveDashboard.isLoading && liveDashboard.data?.kpis.totalAssets === 0) {
+    return <div className="space-y-6"><PageHeader eyebrow={`${settings.workspaceName} · New workspace`} title="Your workspace is ready" description="No infrastructure, applications, incidents, integrations, or monitoring data have been added yet."/><Surface className="p-12 text-center"><Boxes className="mx-auto h-10 w-10 text-eoc-muted"/><h2 className="mt-4 text-lg font-semibold text-eoc-fg">0 assets registered</h2><p className="mx-auto mt-2 max-w-md text-sm text-eoc-fg2">Add the client's first real application, server, database, or cloud service. IAETDS will then read and display only that tenant's data.</p><EButton variant="primary" className="mt-5" onClick={()=>router.push('/console/applications')}>Add first asset</EButton></Surface></div>;
+  }
 
   const scores = dashboardScores.map((s) =>
     s.key === "security" ? { ...s, value: securityScore } : s,

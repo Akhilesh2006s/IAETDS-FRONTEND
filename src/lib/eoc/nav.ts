@@ -41,7 +41,7 @@ export const navGroups: NavGroup[] = [
     label: "Overview",
     items: [
       { label: "Dashboard", href: `${BASE}`, icon: LayoutDashboard },
-      { label: "Infrastructure", href: `${BASE}/applications`, icon: Boxes, badge: "7" },
+      { label: "Infrastructure", href: `${BASE}/applications`, icon: Boxes },
       { label: "Connector Catalog", href: `${BASE}/marketplace`, icon: Store },
     ],
   },
