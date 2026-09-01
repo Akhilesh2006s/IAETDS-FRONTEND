@@ -6,6 +6,7 @@ import {
   ScrollText,
   Settings,
   Siren,
+  PlugZap,
   type LucideIcon,
 } from "lucide-react";
 
@@ -29,6 +30,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Dashboard", href: `${BASE}`, icon: LayoutDashboard },
       { label: "Infrastructure", href: `${BASE}/applications`, icon: Boxes },
+      { label: "Connections", href: `${BASE}/connections`, icon: PlugZap },
     ],
   },
   {
