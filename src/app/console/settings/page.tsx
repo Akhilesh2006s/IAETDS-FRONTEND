@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Bell, Building2, Palette, ShieldCheck, User } from "lucide-react";
+import { Bell, Building2, KeyRound, Palette, ShieldCheck, User } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import { TextInput } from "@/components/eoc/modal";
 import { useEocStore } from "@/lib/eoc/store";
 import { settingsSchema, type SettingsInput } from "@/lib/eoc/validation";
 import { cn } from "@/lib/utils";
+import { api, apiError } from "@/lib/api";
 
 function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -122,8 +123,43 @@ export default function SettingsPage() {
           </div>
         </Surface>
       </form>
+
+      <ChangePassword />
     </div>
   );
+}
+
+function ChangePassword() {
+  const [currentPassword, setCurrentPassword] = React.useState("");
+  const [newPassword, setNewPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [saving, setSaving] = React.useState(false);
+
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (newPassword !== confirmPassword) return toast.error("New passwords do not match");
+    if (newPassword.length < 8 || !/[A-Z]/.test(newPassword) || !/[a-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+      return toast.error("Use at least 8 characters with uppercase, lowercase and a number");
+    }
+    if (newPassword === currentPassword) return toast.error("The new password must be different");
+    setSaving(true);
+    try {
+      await api.patch("/auth/change-password", { currentPassword, newPassword });
+      setCurrentPassword(""); setNewPassword(""); setConfirmPassword("");
+      toast.success("Password changed", { description: "Other refresh sessions have been revoked." });
+    } catch (error) { toast.error("Password change failed", { description: apiError(error) }); }
+    finally { setSaving(false); }
+  };
+
+  return <Surface className="p-5">
+    <div className="flex items-center gap-3"><IconTile icon={KeyRound} accent="#0F766E"/><SectionHeader title="Change password" description="Update your sign-in password securely"/></div>
+    <form onSubmit={submit} className="mt-4 grid gap-4 md:grid-cols-3">
+      <Field label="Current password"><TextInput type="password" autoComplete="current-password" required value={currentPassword} onChange={(e)=>setCurrentPassword(e.target.value)}/></Field>
+      <Field label="New password"><TextInput type="password" autoComplete="new-password" required minLength={8} value={newPassword} onChange={(e)=>setNewPassword(e.target.value)}/></Field>
+      <Field label="Confirm new password"><TextInput type="password" autoComplete="new-password" required minLength={8} value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/></Field>
+      <div className="md:col-span-3 flex flex-wrap items-center justify-between gap-3"><p className="text-xs text-eoc-muted">At least 8 characters, including uppercase, lowercase and a number.</p><EButton type="submit" variant="primary" disabled={saving}>{saving?"Changing…":"Change password"}</EButton></div>
+    </form>
+  </Surface>;
 }
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
