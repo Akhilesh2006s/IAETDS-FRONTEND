@@ -75,7 +75,6 @@ export function CommandPalette({
                     </Command.Empty>
 
                     <Command.Group heading="Quick Actions" className="eoc-cmd-group">
-                      <Item onSelect={() => go("/console/marketplace")} icon={<Plus className="h-4 w-4 text-eoc-accent" />} label="Install application" badge="Action" />
                       <Item onSelect={() => go("/console/security")} icon={<ShieldCheck className="h-4 w-4 text-eoc-success" />} label="Run security scan" badge="Action" />
                       <Item onSelect={() => go("/console/maintenance")} icon={<Wrench className="h-4 w-4 text-eoc-warning" />} label="Schedule maintenance" badge="Action" />
                     </Command.Group>

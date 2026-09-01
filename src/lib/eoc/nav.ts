@@ -1,7 +1,6 @@
 import {
   LayoutDashboard,
   Boxes,
-  Store,
   Workflow,
   Wrench,
   ShieldCheck,
@@ -42,7 +41,6 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Dashboard", href: `${BASE}`, icon: LayoutDashboard },
       { label: "Infrastructure", href: `${BASE}/applications`, icon: Boxes },
-      { label: "Connector Catalog", href: `${BASE}/marketplace`, icon: Store },
     ],
   },
   {

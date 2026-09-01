@@ -115,7 +115,6 @@ export function Topbar({
         <DropdownMenu.Portal>
           <DropdownMenu.Content className={menuCls} align="end" sideOffset={8}>
             {[
-              ["Install application", "/console/marketplace"],
               ["New automation", "/console/automation"],
               ["Schedule maintenance", "/console/maintenance"],
               ["Invite member", "/console/identity"],
