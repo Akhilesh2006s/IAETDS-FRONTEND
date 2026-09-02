@@ -5,8 +5,9 @@ import axios, {
 } from "axios";
 import { useAuthStore } from "@/store/auth";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5050/api";
+// Keep infrastructure hostnames server-side. The browser talks only to the
+// public IAETDS origin; Next.js securely proxies /api to the backend service.
+const API_URL = "/api";
 
 export const api = axios.create({
   baseURL: API_URL,
