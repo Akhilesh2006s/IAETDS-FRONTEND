@@ -36,6 +36,7 @@ export default function LoginPage() {
   const [password, setPassword] = React.useState("");
   const [remember, setRemember] = React.useState(true);
   const [showPw, setShowPw] = React.useState(false);
+  const [loginError, setLoginError] = React.useState("");
 
   React.useEffect(() => {
     if (hydrated && user) router.replace("/console");
@@ -47,11 +48,14 @@ export default function LoginPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError("");
     try {
       await login.mutateAsync({ email, password, remember });
       toast.success("Welcome back", { description: "Opening operations console…" });
     } catch (err) {
-      toast.error("Sign-in failed", { description: apiError(err) });
+      const message = apiError(err);
+      setLoginError(message === "Request failed with status code 401" ? "Incorrect email or password. Please check the credentials and try again." : message);
+      toast.error("Sign-in failed", { description: message });
     }
   };
 
@@ -169,6 +173,7 @@ export default function LoginPage() {
                   </>
                 )}
               </button>
+              {loginError && <div role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{loginError}</div>}
             </form>
 
             {process.env.NODE_ENV === "development" && <><div className="my-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--mkt-muted)]">

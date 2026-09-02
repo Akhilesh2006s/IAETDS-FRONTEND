@@ -16,6 +16,11 @@ function AuthBootstrap({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     let active = true;
+    const publicAuthPage = typeof window !== "undefined" && ["/login", "/signup"].some((path) => window.location.pathname.startsWith(path));
+    if (publicAuthPage && !useAuthStore.getState().user) {
+      setHydrated(true);
+      return () => { active = false; };
+    }
     (async () => {
       try {
         const { data: refreshData } = await api.post("/auth/refresh", {});
