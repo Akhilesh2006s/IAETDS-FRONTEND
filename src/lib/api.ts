@@ -65,7 +65,8 @@ api.interceptors.response.use(
         flushQueue(refreshErr, null);
         useAuthStore.getState().clear();
         if (typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
-          window.location.href = "/login";
+          const next = encodeURIComponent(window.location.pathname + window.location.search);
+          window.location.replace(`/login?reason=session_expired&next=${next}`);
         }
         return Promise.reject(refreshErr);
       } finally {

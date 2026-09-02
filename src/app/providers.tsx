@@ -29,7 +29,8 @@ function AuthBootstrap({ children }: { children: React.ReactNode }) {
           );
         }
       } catch {
-        // not logged in — fine
+        // Expired/revoked sessions must never leave stale console identity behind.
+        useAuthStore.getState().clear();
       } finally {
         if (active) setHydrated(true);
       }
