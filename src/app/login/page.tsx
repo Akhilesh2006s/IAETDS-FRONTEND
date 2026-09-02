@@ -41,6 +41,10 @@ export default function LoginPage() {
     if (hydrated && user) router.replace("/console");
   }, [hydrated, user, router]);
 
+  React.useEffect(() => {
+    router.prefetch("/console");
+  }, [router]);
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {

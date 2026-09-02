@@ -19,18 +19,18 @@ function AuthBootstrap({ children }: { children: React.ReactNode }) {
     (async () => {
       try {
         const { data: refreshData } = await api.post("/auth/refresh", {});
-        useAuthStore.getState().setToken(refreshData.data.accessToken);
-        const { data } = await api.get("/auth/me");
         if (active) {
-          setAuth(
-            data.data.user,
-            useAuthStore.getState().accessToken as string,
-            data.data.permissions,
-          );
+          if (refreshData.data.user) {
+            setAuth(refreshData.data.user, refreshData.data.accessToken, refreshData.data.permissions || []);
+          } else {
+            useAuthStore.getState().setToken(refreshData.data.accessToken);
+            const { data } = await api.get("/auth/me");
+            if (active) setAuth(data.data.user, refreshData.data.accessToken, data.data.permissions);
+          }
         }
       } catch {
         // Expired/revoked sessions must never leave stale console identity behind.
-        useAuthStore.getState().clear();
+        if (!useAuthStore.getState().user) useAuthStore.getState().clear();
       } finally {
         if (active) setHydrated(true);
       }
