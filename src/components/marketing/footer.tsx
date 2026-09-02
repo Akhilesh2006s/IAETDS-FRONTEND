@@ -27,6 +27,7 @@ export function MarketingFooter() {
             <li>Infrastructure monitoring</li>
             <li>Incident &amp; maintenance ops</li>
             <li>Identity governance</li>
+            <li><a href="mailto:info@iaetds.com" className="hover:text-white">info@iaetds.com</a></li>
           </ul>
         </div>
       </div>

@@ -37,7 +37,7 @@ export function Topbar() {
           aria-label="Support"
           onClick={() =>
             toast.info("Support", {
-              description: "Reach the IAETDS support desk at support@iaetds.io.",
+              description: "Reach the IAETDS support desk at info@iaetds.com.",
             })
           }
         >

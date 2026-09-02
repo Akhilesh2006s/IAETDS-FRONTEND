@@ -127,7 +127,7 @@ export default function LoginPage() {
               <label className="block">
                 <span className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-[var(--mkt-muted)]">
                   Password
-                  <span className="normal-case tracking-normal">Contact your administrator</span>
+                  <a href="mailto:info@iaetds.com?subject=IAETDS%20sign-in%20support" className="normal-case tracking-normal text-[var(--mkt-teal)] hover:underline">Need help? info@iaetds.com</a>
                 </span>
                 <div className="relative mt-1.5">
                   <Lock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--mkt-muted)]" />

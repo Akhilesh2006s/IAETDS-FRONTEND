@@ -146,6 +146,9 @@ export function Topbar({
                 {label}
               </DropdownMenu.Item>
             ))}
+            <DropdownMenu.Item className={itemCls} onSelect={() => { window.location.href = "mailto:info@iaetds.com?subject=IAETDS%20support%20request"; }}>
+              Contact support · info@iaetds.com
+            </DropdownMenu.Item>
             <DropdownMenu.Separator className="my-1 h-px bg-eoc-border" />
             <DropdownMenu.Item className={cn(itemCls, "text-eoc-danger data-[highlighted]:text-eoc-danger")} onSelect={() => logout.mutate()}>
               Sign out
