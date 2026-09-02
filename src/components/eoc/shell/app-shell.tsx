@@ -25,9 +25,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   React.useEffect(() => {
-    if (user?.workspaceName && useEocStore.getState().settings.workspaceName !== user.workspaceName) {
-      useEocStore.getState().updateSettings({ workspaceName: user.workspaceName, workspacePlan: user.workspacePlan || "trial" });
-    }
+    if (!user) return;
+    const roleLabels: Record<string, string> = {
+      super_admin: "Workspace Owner",
+      security_analyst: "Security Analyst",
+      maintenance_engineer: "Maintenance Engineer",
+      operations_manager: "Operations Manager",
+      viewer: "Viewer",
+    };
+    useEocStore.getState().updateSettings({
+      profileName: user.name,
+      profileEmail: user.email,
+      profileRole: roleLabels[user.role] || user.role,
+      workspaceName: user.workspaceName || "Workspace",
+      workspacePlan: user.workspacePlan || "trial",
+      workspaceRegion: user.workspaceName === "AsliLearn AI" ? "Asia/Kolkata (IST)" : "Not configured",
+      mfa: Boolean(user.mfaEnabled),
+    });
   }, [user]);
 
   // Keep the authenticated console aligned with the white marketing experience.

@@ -12,6 +12,7 @@ import { useEocStore } from "@/lib/eoc/store";
 import { settingsSchema, type SettingsInput } from "@/lib/eoc/validation";
 import { cn } from "@/lib/utils";
 import { api, apiError } from "@/lib/api";
+import { useAuthStore } from "@/store/auth";
 
 function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -40,15 +41,27 @@ function Row({ title, desc, control }: { title: string; desc: string; control: R
 export default function SettingsPage() {
   const settings = useEocStore((s) => s.settings);
   const updateSettings = useEocStore((s) => s.updateSettings);
+  const user = useAuthStore((s) => s.user);
+  const roleLabels: Record<string, string> = { super_admin: "Workspace Owner", security_analyst: "Security Analyst", maintenance_engineer: "Maintenance Engineer", operations_manager: "Operations Manager", viewer: "Viewer" };
+  const accountSettings = React.useMemo(() => ({
+    ...settings,
+    profileName: user?.name || settings.profileName,
+    profileEmail: user?.email || settings.profileEmail,
+    profileRole: user ? (roleLabels[user.role] || user.role) : settings.profileRole,
+    workspaceName: user?.workspaceName || settings.workspaceName,
+    workspacePlan: user?.workspacePlan || settings.workspacePlan,
+    workspaceRegion: user?.workspaceName === "AsliLearn AI" ? "Asia/Kolkata (IST)" : settings.workspaceRegion,
+    mfa: Boolean(user?.mfaEnabled),
+  }), [settings, user]);
 
   const { register, handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm<SettingsInput>({
     resolver: zodResolver(settingsSchema),
-    defaultValues: settings,
+    defaultValues: accountSettings,
   });
 
   React.useEffect(() => {
-    reset(settings);
-  }, [settings, reset]);
+    reset(accountSettings);
+  }, [accountSettings, reset]);
 
   const onSubmit = handleSubmit((data) => {
     updateSettings(data);
